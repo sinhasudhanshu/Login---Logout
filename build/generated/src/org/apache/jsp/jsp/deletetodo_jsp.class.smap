@@ -1,0 +1,16 @@
+SMAP
+deletetodo_jsp.java
+JSP
+*S JSP
+*F
++ 0 deletetodo.jsp
+jsp/deletetodo.jsp
+*L
+5,14:46
+19,38:61
+56,2:99
+58:101,3
+59,3:104
+62:107,3
+63,10:110
+*E
