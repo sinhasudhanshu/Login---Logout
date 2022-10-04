@@ -1,9 +1,3 @@
-<%-- 
-    Document   : protected
-    Created on : 13 Sep, 2022, 6:17:56 PM
-    Author     : ASUS
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,10 +15,7 @@
                return;
             }
         String username="" + session.getAttribute("username");
-        out.println(username);
-        
-        
-        
+        out.println(username);   
         %>
     </body>
 </html>

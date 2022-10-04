@@ -1,8 +1,4 @@
-<%-- 
-    Document   : test
-    Created on : 13 Sep, 2022, 4:17:45 PM
-    Author     : ASUS
---%>
+
 
 <%@page import="authpackage.LoginManager"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -36,7 +32,6 @@
                         
                     }
                     result="Failed";
-
                 }
             %>
             <h2><%=result%></h2>

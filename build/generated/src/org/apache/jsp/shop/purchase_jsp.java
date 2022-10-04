@@ -1,11 +1,11 @@
-package org.apache.jsp.jsp.loginproject;
+package org.apache.jsp.shop;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import java.sql.PreparedStatement;
 
-public final class users_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class purchase_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -50,65 +50,75 @@ public final class users_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Login</title>\n");
+      out.write("        <title>purchaseorder</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        <center>\n");
-      out.write("                <h1> Register User </h1>\n");
-      out.write("\n");
-      out.write("          ");
+      out.write("        ");
 
             String check = request.getParameter("check");
-            
             boolean ispostback;
             if (check == null) {
                 ispostback = false;
             } else {
                 ispostback = true;
             }
-            String Username = "", name = "", password = "", result = "";
+            String receiptno = "", customername = "", mobileno = "", dateofpurchase = "", result = "";
             System.out.println(ispostback);
+
             if (ispostback) {
                 try {
-                    Username = request.getParameter("Username");
-                    name = request.getParameter("name");
-                    password = request.getParameter("password");
-                   
-                    PreparedStatement ps = datapackage.DbConnect.connect().prepareStatement("insert into Users values(?,?,?)");
-                    ps.setString(1, Username);
-                    ps.setString(2, name);
-                    ps.setString(3, password);
+                    receiptno = request.getParameter("receiptno");
+                    customername = request.getParameter("customername");
+                    mobileno = request.getParameter("mobileno");
+                    dateofpurchase = request.getParameter("dateofpurchase");
+                    
+                    
+                    PreparedStatement ps = datapackage.DbConnect.connect().prepareStatement("insert into purchaseorder values(?,?,?,?)");
+                    ps.setString(1, receiptno);
+                    ps.setString(2, customername);
+                    ps.setString(3, mobileno);
+                    ps.setString(4, dateofpurchase);
+                    
+                    
                     int n = ps.executeUpdate();
-                    result = "Inserted " + n + " records";
+                    result = "Inserted " +  " records";
                 } catch (Exception ex) {
                     System.out.println(ex);
-                    result ="Failed";// ex.getMessage();
+                    result = ex.getMessage();
                 }
             }
 
-            
+        
       out.write("\n");
-      out.write("            <h2>");
+      out.write("\n");
+      out.write("    <center>\n");
+      out.write("        <h1>Purchase</h1>\n");
+      out.write("        <form>\n");
+      out.write("            <h3>");
       out.print(result);
-      out.write("</h2>\n");
-      out.write("            <form method=\"post\">\n");
-      out.write("          <input type=\"hidden\" name=\"check\" value=\"1\">\n");
-      out.write("            Username<input value=\"");
-      out.print(Username);
-      out.write("\" name=\"Username\" type=\"text\">\n");
+      out.write("</h3>\n");
+      out.write("            <input type=\"hidden\" name=\"check\" value=\"1\">\n");
+      out.write("            receiptno<input  name=\"receiptno\" autocomplete=\"off\" value=\"");
+      out.print(receiptno);
+      out.write("\" type=\"number\"><br>\n");
       out.write("           \n");
-      out.write("            name<input name=\"name\" value=\"");
-      out.print(name);
-      out.write("\" type=\"text\">\n");
-      out.write("           \n");
-      out.write("            password<input name=\"password\" value=\"");
-      out.print(password);
-      out.write("\" type=\"password\">\n");
+      out.write("            customername<input name=\"customername\" autocomplete=\"off\" value=\"");
+      out.print(customername);
+      out.write("\" type=\"text\"><br>\n");
+      out.write("            \n");
+      out.write("            mobileno<input name=\"mobileno\" autocomplete=\"off\" value=\"");
+      out.print(mobileno);
+      out.write("\" type=\"number\"><br>\n");
+      out.write("            \n");
+      out.write("            dateofpurchase<input name=\"dateofpurchase\" autocomplete=\"off\" value=\"");
+      out.print(dateofpurchase);
+      out.write("\" type=\"date\"><br>\n");
       out.write("            <br>\n");
       out.write("            <br>\n");
       out.write("            <input type=\"submit\">\n");
-      out.write("          </form>\n");
-      out.write("        </center>\n");
+      out.write("            \n");
+      out.write("        </form>\n");
+      out.write("    </center>\n");
       out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {

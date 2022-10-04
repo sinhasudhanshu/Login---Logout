@@ -1,11 +1,14 @@
-package org.apache.jsp;
+package org.apache.jsp.shop;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
-import authpackage.LoginManager;
+import java.sql.ResultSetMetaData;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import datapackage.DbConnect;
 
-public final class test_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class stockdetail_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -46,6 +49,9 @@ public final class test_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
       out.write("    <head>\n");
@@ -53,50 +59,58 @@ public final class test_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <title>JSP Page</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        \n");
-      out.write("            ");
+      out.write("         ");
 
-                boolean ispostback;
-                String check = request.getParameter("check");
-                if (check == null) {
-                    ispostback = false;
-                } else {
-                    ispostback = true;
-                }
-                String username = "", password = "",result="";
-                if (ispostback) {
-                    username = request.getParameter("username");
-                    password = request.getParameter("password");
-                   
-                    boolean b = LoginManager.isUsernameAndPasswordCorrect(username, password);
-                    if(b)
-                    {
-                        session.setAttribute("username", username);
-                        response.sendRedirect("protected.jsp");
-                        return;
-                        
+            PreparedStatement ps = DbConnect.connect().prepareStatement("select * from productstock order by productid");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int n = rsmd.getColumnCount();
+        
+      out.write("\n");
+      out.write("\n");
+      out.write("        <table border=\"1\">\n");
+      out.write("            <tr>\n");
+      out.write("                ");
+
+                    for (int i = 1; i <= n; i++) {
+                
+      out.write("\n");
+      out.write("                <th>");
+      out.print(rsmd.getColumnLabel(i));
+      out.write("</th>\n");
+      out.write("\n");
+      out.write("                ");
+
                     }
-                    result="Failed";
+
+                
+      out.write("\n");
+      out.write("            </tr>\n");
+      out.write("            ");
+   while (rs.next()) {
+      out.write("\n");
+      out.write("            <tr>\n");
+      out.write("                ");
+
+                    for (int i = 1; i <= n; i++) {
+                
+      out.write("\n");
+      out.write("                <th>");
+      out.print(rs.getObject(i));
+      out.write("</th>\n");
+      out.write("                    ");
+
+                        }
+                    
+      out.write("\n");
+      out.write("            </tr>\n");
+      out.write("            ");
 
                 }
             
       out.write("\n");
-      out.write("            <h2>");
-      out.print(result);
-      out.write("</h2>\n");
-      out.write("        <form method=\"post\">\n");
-      out.write("            <input type=\"hidden\" name=\"check\"/>\n");
-      out.write("            Username<input value=\"");
-      out.print(username);
-      out.write("\" type=\"text\" name=\"username\"/>\n");
-      out.write("            <br>\n");
-      out.write("            Password<input value=\"");
-      out.print(password);
-      out.write("\" type=\"password\" name=\"password\"/>\n");
-      out.write("            <br>\n");
-      out.write("            <input type=\"submit\" value=\"Login\"/>\n");
-      out.write("            <br>\n");
-      out.write("        </form>\n");
+      out.write("        </table>\n");
+      out.write("\n");
       out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {
